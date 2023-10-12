@@ -17,7 +17,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Overview | Devias Kit
+        Overview | Gatekeeper
       </title>
     </Head>
     <Box
@@ -53,7 +53,7 @@ const Page = () => (
               difference={16}
               positive={false}
               sx={{ height: '100%' }}
-              value="1.6k"
+              value="15"
             />
           </Grid>
           <Grid
@@ -100,56 +100,13 @@ const Page = () => (
             lg={4}
           >
             <OverviewTraffic
-              chartSeries={[63, 15, 22]}
-              labels={['Desktop', 'Tablet', 'Phone']}
+              chartSeries={[2, 8, 1, 4]}
+              labels={['Visitor', 'Contractor', 'Officer', 'Staff']}
               sx={{ height: '100%' }}
             />
           </Grid>
           <Grid
             xs={12}
-            md={6}
-            lg={4}
-          >
-            <OverviewLatestProducts
-              products={[
-                {
-                  id: '5ece2c077e39da27658aa8a9',
-                  image: '/assets/products/product-1.png',
-                  name: 'Healthcare Erbology',
-                  updatedAt: subHours(now, 6).getTime()
-                },
-                {
-                  id: '5ece2c0d16f70bff2cf86cd8',
-                  image: '/assets/products/product-2.png',
-                  name: 'Makeup Lancome Rouge',
-                  updatedAt: subDays(subHours(now, 8), 2).getTime()
-                },
-                {
-                  id: 'b393ce1b09c1254c3a92c827',
-                  image: '/assets/products/product-5.png',
-                  name: 'Skincare Soja CO',
-                  updatedAt: subDays(subHours(now, 1), 1).getTime()
-                },
-                {
-                  id: 'a6ede15670da63f49f752c89',
-                  image: '/assets/products/product-6.png',
-                  name: 'Makeup Lipstick',
-                  updatedAt: subDays(subHours(now, 3), 3).getTime()
-                },
-                {
-                  id: 'bcad5524fe3a2f8f8620ceda',
-                  image: '/assets/products/product-7.png',
-                  name: 'Healthcare Ritual',
-                  updatedAt: subDays(subHours(now, 5), 6).getTime()
-                }
-              ]}
-              sx={{ height: '100%' }}
-            />
-          </Grid>
-          <Grid
-            xs={12}
-            md={12}
-            lg={8}
           >
             <OverviewLatestOrders
               orders={[
@@ -161,7 +118,7 @@ const Page = () => (
                     name: 'Ekaterina Tankova'
                   },
                   createdAt: 1555016400000,
-                  status: 'pending'
+                  status: 'onsite'
                 },
                 {
                   id: '9eaa1c7dd4433f413c308ce2',
@@ -171,7 +128,7 @@ const Page = () => (
                     name: 'Cao Yu'
                   },
                   createdAt: 1555016400000,
-                  status: 'delivered'
+                  status: 'onsite'
                 },
                 {
                   id: '01a5230c811bd04996ce7c13',
@@ -181,7 +138,7 @@ const Page = () => (
                     name: 'Alexa Richardson'
                   },
                   createdAt: 1554930000000,
-                  status: 'refunded'
+                  status: 'onsite'
                 },
                 {
                   id: '1f4e1bd0a87cea23cdb83d18',
@@ -191,7 +148,7 @@ const Page = () => (
                     name: 'Anje Keizer'
                   },
                   createdAt: 1554757200000,
-                  status: 'pending'
+                  status: 'signed out'
                 },
                 {
                   id: '9f974f239d29ede969367103',
@@ -201,7 +158,7 @@ const Page = () => (
                     name: 'Clarke Gillebert'
                   },
                   createdAt: 1554670800000,
-                  status: 'delivered'
+                  status: 'timed out'
                 },
                 {
                   id: 'ffc83c1560ec2f66a1c05596',
@@ -211,7 +168,7 @@ const Page = () => (
                     name: 'Adam Denisov'
                   },
                   createdAt: 1554670800000,
-                  status: 'delivered'
+                  status: 'signed out'
                 }
               ]}
               sx={{ height: '100%' }}
