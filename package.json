@@ -6,9 +6,9 @@
   "homepage": "https://devias.io",
   "private": false,
   "scripts": {
-    "dev": "next",
+    "dev": "next -p 8081",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 8081",
     "export": "next export",
     "lint": "next lint",
     "lint-fix": "next lint --fix"
@@ -38,6 +38,7 @@
     "react-apexcharts": "1.4.0",
     "react-dom": "18.2.0",
     "simplebar-react": "^3.2.1",
+    "swr": "^2.2.4",
     "yup": "1.0.0"
   },
   "devDependencies": {

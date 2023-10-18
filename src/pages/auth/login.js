@@ -22,19 +22,19 @@ import { Layout as AuthLayout } from 'src/layouts/auth/layout';
 const Page = () => {
   const router = useRouter();
   const auth = useAuth();
-  const [method, setMethod] = useState('email');
+  const [method, setMethod] = useState('username');
   const formik = useFormik({
     initialValues: {
-      email: 'demo@devias.io',
-      password: 'Password123!',
+      username: 'test',
+      password: 'test',
       submit: null
     },
     validationSchema: Yup.object({
-      email: Yup
-        .string()
-        .email('Must be a valid email')
-        .max(255)
-        .required('Email is required'),
+      // username: Yup
+      //   .string()
+      //   .username('Must be a valid username')
+      //   .max(255)
+      //   .required('username is required'),
       password: Yup
         .string()
         .max(255)
@@ -42,7 +42,7 @@ const Page = () => {
     }),
     onSubmit: async (values, helpers) => {
       try {
-        await auth.signIn(values.email, values.password);
+        await auth.signIn(values.username, values.password);
         router.push('/');
       } catch (err) {
         helpers.setStatus({ success: false });
@@ -59,19 +59,11 @@ const Page = () => {
     []
   );
 
-  const handleSkip = useCallback(
-    () => {
-      auth.skip();
-      router.push('/');
-    },
-    [auth, router]
-  );
-
   return (
     <>
       <Head>
         <title>
-          Login | Devias Kit
+          Login | Gatekeeper
         </title>
       </Head>
       <Box
@@ -99,21 +91,6 @@ const Page = () => {
               <Typography variant="h4">
                 Login
               </Typography>
-              <Typography
-                color="text.secondary"
-                variant="body2"
-              >
-                Don&apos;t have an account?
-                &nbsp;
-                <Link
-                  component={NextLink}
-                  href="/auth/register"
-                  underline="hover"
-                  variant="subtitle2"
-                >
-                  Register
-                </Link>
-              </Typography>
             </Stack>
             <Tabs
               onChange={handleMethodChange}
@@ -121,30 +98,30 @@ const Page = () => {
               value={method}
             >
               <Tab
-                label="Email"
-                value="email"
+                label="Username"
+                value="username"
               />
               <Tab
                 label="Phone Number"
                 value="phoneNumber"
               />
             </Tabs>
-            {method === 'email' && (
+            {method === 'username' && (
               <form
                 noValidate
                 onSubmit={formik.handleSubmit}
               >
                 <Stack spacing={3}>
                   <TextField
-                    error={!!(formik.touched.email && formik.errors.email)}
+                    error={!!(formik.touched.username && formik.errors.username)}
                     fullWidth
-                    helperText={formik.touched.email && formik.errors.email}
-                    label="Email Address"
-                    name="email"
+                    helperText={formik.touched.username && formik.errors.username}
+                    label="Username"
+                    name="username"
                     onBlur={formik.handleBlur}
                     onChange={formik.handleChange}
-                    type="email"
-                    value={formik.values.email}
+                    type="username"
+                    value={formik.values.username}
                   />
                   <TextField
                     error={!!(formik.touched.password && formik.errors.password)}
@@ -158,9 +135,6 @@ const Page = () => {
                     value={formik.values.password}
                   />
                 </Stack>
-                <FormHelperText sx={{ mt: 1 }}>
-                  Optionally you can skip.
-                </FormHelperText>
                 {formik.errors.submit && (
                   <Typography
                     color="error"
@@ -179,14 +153,6 @@ const Page = () => {
                 >
                   Continue
                 </Button>
-                <Button
-                  fullWidth
-                  size="large"
-                  sx={{ mt: 3 }}
-                  onClick={handleSkip}
-                >
-                  Skip authentication
-                </Button>
                 <Alert
                   color="primary"
                   severity="info"
@@ -204,10 +170,10 @@ const Page = () => {
                   sx={{ mb: 1 }}
                   variant="h6"
                 >
-                  Not available in the demo
+                  Coming soon
                 </Typography>
                 <Typography color="text.secondary">
-                  To prevent unnecessary costs we disabled this feature in the demo.
+                  To prevent unnecessary costs we disabled this feature for now.
                 </Typography>
               </div>
             )}
