@@ -10,6 +10,7 @@ import {
   TextField,
   Unstable_Grid2 as Grid
 } from '@mui/material';
+import { useAuth } from 'src/hooks/use-auth';
 
 const states = [
   {
@@ -31,13 +32,14 @@ const states = [
 ];
 
 export const AccountProfileDetails = () => {
+  const { user } = useAuth();
   const [values, setValues] = useState({
-    firstName: 'Anika',
+    firstName: user.name,
     lastName: 'Visser',
-    email: 'demo@devias.io',
+    email: user.email,
     phone: '',
-    state: 'los-angeles',
-    country: 'USA'
+    state: '',
+    country: ''
   });
 
   const handleChange = useCallback(
@@ -65,7 +67,7 @@ export const AccountProfileDetails = () => {
     >
       <Card>
         <CardHeader
-          subheader="The information can be edited"
+          // subheader="The information can be edited"
           title="Profile"
         />
         <CardContent sx={{ pt: 0 }}>
@@ -98,7 +100,6 @@ export const AccountProfileDetails = () => {
                   name="lastName"
                   onChange={handleChange}
                   required
-                  value={values.lastName}
                 />
               </Grid>
               <Grid
@@ -144,7 +145,7 @@ export const AccountProfileDetails = () => {
                 xs={12}
                 md={6}
               >
-                <TextField
+                {/* <TextField
                   fullWidth
                   label="Select State"
                   name="state"
@@ -162,7 +163,7 @@ export const AccountProfileDetails = () => {
                       {option.label}
                     </option>
                   ))}
-                </TextField>
+                </TextField> */}
               </Grid>
             </Grid>
           </Box>

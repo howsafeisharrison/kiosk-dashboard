@@ -84,9 +84,9 @@ export const AuthProvider = (props) => {
     if (isAuthenticated) {
       const user = {
         id: '5e86809283e28b96d2d38537',
-        avatar: '/assets/avatars/avatar-anika-visser.png',
-        name: 'Anika Visser',
-        email: 'anika.visser@devias.io'
+        avatar: '/assets/avatars/default.png',
+        name: 'TEST',
+        email: 'TEST@email.com'
       };
 
       dispatch({
@@ -108,26 +108,6 @@ export const AuthProvider = (props) => {
     []
   );
 
-  const skip = () => {
-    try {
-      window.sessionStorage.setItem('authenticated', 'true');
-    } catch (err) {
-      console.error(err);
-    }
-
-    const user = {
-      id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
-    };
-
-    dispatch({
-      type: HANDLERS.SIGN_IN,
-      payload: user
-    });
-  };
-
   const signIn = async (username, password) => {
     const loginResult = await axiosApi.post('/admin/login', {
       username: username,
@@ -146,9 +126,9 @@ export const AuthProvider = (props) => {
 
     const user = {
       id: '5e86809283e28b96d2d38537',
-      avatar: '/assets/avatars/avatar-anika-visser.png',
-      name: 'Anika Visser',
-      email: 'anika.visser@devias.io'
+      avatar: '/assets/avatars/default.png',
+      name: username,
+      email: ''
     };
 
     dispatch({
@@ -171,7 +151,6 @@ export const AuthProvider = (props) => {
     <AuthContext.Provider
       value={{
         ...state,
-        skip,
         signIn,
         signUp,
         signOut

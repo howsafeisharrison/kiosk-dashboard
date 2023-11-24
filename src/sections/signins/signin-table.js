@@ -1,10 +1,11 @@
 import PropTypes from 'prop-types';
 import { format } from 'date-fns';
 import {
-  Avatar,
   Box,
   Card,
   Checkbox,
+  Icon,
+  IconButton,
   Stack,
   Table,
   TableBody,
@@ -14,10 +15,11 @@ import {
   TableRow,
   Typography
 } from '@mui/material';
+import PencilIcon from '@heroicons/react/24/solid/PencilIcon';
+import TrashIcon from '@heroicons/react/24/solid/TrashIcon';
 import { Scrollbar } from 'src/components/scrollbar';
-import { getInitials } from 'src/utils/get-initials';
 
-export const CustomersTable = (props) => {
+export const SigninTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -59,28 +61,34 @@ export const CustomersTable = (props) => {
                   Name
                 </TableCell>
                 <TableCell>
-                  Email
+                  User Type
                 </TableCell>
                 <TableCell>
-                  Location
+                  Visiting
                 </TableCell>
                 <TableCell>
-                  Phone
+                  Sign In Time
                 </TableCell>
                 <TableCell>
-                  Signed Up
+                  Sign Out TIme
+                </TableCell>
+                <TableCell>
+                  Status
+                </TableCell>
+                <TableCell>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((customer) => {
-                const isSelected = selected.includes(customer.id);
-                const createdAt = format(customer.createdAt, 'dd/MM/yyyy');
+              {items.map((visit) => {
+                const isSelected = selected.includes(visit.id);
+                const signIn = format(new Date(visit.signin_time), 'dd/MM/yyyy - hh:mm:ss a');
+                const signOut = format(new Date(visit.signout_time), 'dd/MM/yyyy - hh:mm:ss a');
 
                 return (
                   <TableRow
                     hover
-                    key={customer.id}
+                    key={visit.id}
                     selected={isSelected}
                   >
                     <TableCell padding="checkbox">
@@ -88,9 +96,9 @@ export const CustomersTable = (props) => {
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(customer.id);
+                            onSelectOne?.(visit.id);
                           } else {
-                            onDeselectOne?.(customer.id);
+                            onDeselectOne?.(visit.id);
                           }
                         }}
                       />
@@ -101,25 +109,33 @@ export const CustomersTable = (props) => {
                         direction="row"
                         spacing={2}
                       >
-                        <Avatar src={customer.avatar}>
-                          {getInitials(customer.name)}
-                        </Avatar>
                         <Typography variant="subtitle2">
-                          {customer.name}
+                          {visit.name}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {customer.email}
+                      {visit.userType}
                     </TableCell>
                     <TableCell>
-                      {customer.address.city}, {customer.address.state}, {customer.address.country}
+                      {visit.visiting}
                     </TableCell>
                     <TableCell>
-                      {customer.phone}
+                      {signIn}
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                      {signOut}
+                    </TableCell>
+                    <TableCell>
+                      {visit.signout_type ? visit.signout_type : 'On-site'}
+                    </TableCell>
+                    <TableCell>
+                      <IconButton>
+                        <Icon><PencilIcon/></Icon>
+                      </IconButton>
+                      <IconButton>
+                        <Icon color='error'><TrashIcon/></Icon>
+                      </IconButton>
                     </TableCell>
                   </TableRow>
                 );
@@ -141,7 +157,7 @@ export const CustomersTable = (props) => {
   );
 };
 
-CustomersTable.propTypes = {
+SigninTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,

@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Box, Container, Stack, Typography, Unstable_Grid2 as Grid } from '@mui/material';
+import { Alert, Box, Container, Stack, Typography, Unstable_Grid2 as Grid } from '@mui/material';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
 import { AccountProfile } from 'src/sections/account/account-profile';
 import { AccountProfileDetails } from 'src/sections/account/account-profile-details';
@@ -8,7 +8,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Account | Devias Kit
+        Account | Gatekeeper
       </title>
     </Head>
     <Box
@@ -25,6 +25,15 @@ const Page = () => (
               Account
             </Typography>
           </div>
+          <Alert
+            color="primary"
+            severity="info"
+            sx={{ mt: 3 }}
+          >
+            <div>
+              Account settings are currently not available, contact howsafe to change your settings
+            </div>
+          </Alert>
           <div>
             <Grid
               container

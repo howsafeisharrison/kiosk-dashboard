@@ -14,36 +14,36 @@ import {
 } from "@mui/material";
 import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { UsersTable } from "src/sections/user/users-table";
-import { UsersSearch } from "src/sections/user/users-search";
+import { SigninTable } from "src/sections/signins/signin-table";
+import { SigninSearch } from "src/sections/signins/signin-search";
 import { applyPagination } from "src/utils/apply-pagination";
-import useUsers from "src/hooks/useUsers";
+import useVisits from "src/hooks/useVisits";
 
-const usePaginatedUsers = (data, page, rowsPerPage) => {
+const usePaginatedVisits = (data, page, rowsPerPage) => {
   return useMemo(() => {
     return applyPagination(data, page, rowsPerPage);
   }, [data, page, rowsPerPage]);
 };
 
-const useUserIds = (users) => {
+const useVisitIds = (visits) => {
   return useMemo(() => {
-    return users?.map((user) => user.id);
-  }, [users]);
+    return visits?.map((visit) => visit.id);
+  }, [visits]);
 };
 
 const Page = () => {
-  const { users, isError, isLoading } = useUsers();
-
+  const { visits, isError, isLoading } = useVisits();
+  
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const paginatedUsers = usePaginatedUsers(users, page, rowsPerPage);
-  const userIds = useUserIds(users);
-  const userSelection = useSelection(userIds);
+  const paginatedVisits = usePaginatedVisits(visits, page, rowsPerPage);
+  const visitIds = useVisitIds(visits);
+  const visitSelection = useSelection(visitIds);
 
   const handlePageChange = useCallback((event, value) => {
     setPage(value);
   }, []);
-
+  
   const handleRowsPerPageChange = useCallback((event) => {
     setRowsPerPage(event.target.value);
   }, []);
@@ -51,7 +51,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Users | Gatekeeper</title>
+        <title>Sign Ins | Gatekeeper</title>
       </Head>
       <Box
         component="main"
@@ -64,7 +64,7 @@ const Page = () => {
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Typography variant="h4">Users</Typography>
+                <Typography variant="h4">Sign Ins</Typography>
                 <Stack alignItems="center" direction="row" spacing={1}>
                   <Button
                     color="inherit"
@@ -101,22 +101,23 @@ const Page = () => {
                 </Button>
               </div>
             </Stack>
-            <UsersSearch />
+            <SigninSearch />
             {isLoading ? (
               <CircularProgress />
             ) : (
-              <UsersTable
-                count={users.length}
-                items={paginatedUsers}
-                onDeselectAll={userSelection.handleDeselectAll}
-                onDeselectOne={userSelection.handleDeselectOne}
+              <SigninTable
+                count={visits.length}
+                items={paginatedVisits}
+                onDeselectAll={visitSelection.handleDeselectAll}
+                onDeselectOne={visitSelection.handleDeselectOne}
                 onPageChange={handlePageChange}
                 onRowsPerPageChange={handleRowsPerPageChange}
-                onSelectAll={userSelection.handleSelectAll}
-                onSelectOne={userSelection.handleSelectOne}
+                onSelectAll={visitSelection.handleSelectAll}
+                onSelectOne={visitSelection.handleSelectOne}
                 page={page}
                 rowsPerPage={rowsPerPage}
-                selected={userSelection.selected}
+                selected={visitSelection.selected}
+                load={isLoading}
               />
             )}
           </Stack>

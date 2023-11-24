@@ -1,5 +1,5 @@
 import Head from 'next/head';
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Alert, Box, Container, Stack, Typography } from '@mui/material';
 import { SettingsNotifications } from 'src/sections/settings/settings-notifications';
 import { SettingsPassword } from 'src/sections/settings/settings-password';
 import { Layout as DashboardLayout } from 'src/layouts/dashboard/layout';
@@ -8,7 +8,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        Settings | Devias Kit
+        Settings | Gatekeeper
       </title>
     </Head>
     <Box
@@ -23,6 +23,15 @@ const Page = () => (
           <Typography variant="h4">
             Settings
           </Typography>
+          <Alert
+            color="primary"
+            severity="info"
+            sx={{ mt: 3 }}
+          >
+            <div>
+              Settings are currently not available, contact howsafe to change your settings
+            </div>
+          </Alert>
           <SettingsNotifications />
           <SettingsPassword />
         </Stack>

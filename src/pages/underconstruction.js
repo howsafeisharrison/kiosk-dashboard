@@ -7,7 +7,7 @@ const Page = () => (
   <>
     <Head>
       <title>
-        404 | Gatekeeper
+        Under Construction | Gatekeeper
       </title>
     </Head>
     <Box
@@ -34,12 +34,11 @@ const Page = () => (
             }}
           >
             <img
-              alt="404"
-              src="/assets/errors/error-404.png"
+              alt="Under development"
+              src="/assets/construction.jpg"
               style={{
                 display: 'inline-block',
                 maxWidth: '100%',
-                width: 400
               }}
             />
           </Box>
@@ -48,15 +47,14 @@ const Page = () => (
             sx={{ mb: 3 }}
             variant="h3"
           >
-            404: The page you are looking for isn’t here
+            Under construction: The requested page isn’t ready yet
           </Typography>
           <Typography
             align="center"
             color="text.secondary"
             variant="body1"
           >
-            You likely ended up here by mistake, if you believe this an error contact Howsafe IT.<br/>
-            Whichever it is, try refreshing or returning to the dashboard.
+            This page is currently in development by Howsafe Software, stay tuned for updates
           </Typography>
           <Button
             component={NextLink}

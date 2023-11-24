@@ -32,7 +32,7 @@ const Page = () => (
           container
           spacing={3}
         >
-          <Grid
+          {/* <Grid
             xs={12}
             sm={6}
             lg={3}
@@ -73,9 +73,9 @@ const Page = () => (
           >
             <OverviewTotalProfit
               sx={{ height: '100%' }}
-              value="$15k"
+              value=""
             />
-          </Grid>
+          </Grid> */}
           <Grid
             xs={12}
             lg={8}

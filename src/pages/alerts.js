@@ -17,28 +17,28 @@ import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
 import { UsersTable } from "src/sections/user/users-table";
 import { UsersSearch } from "src/sections/user/users-search";
 import { applyPagination } from "src/utils/apply-pagination";
-import useUsers from "src/hooks/useUsers";
+import useAlerts from "src/hooks/useAlerts";
 
-const usePaginatedUsers = (data, page, rowsPerPage) => {
+const usePaginatedAlerts = (data, page, rowsPerPage) => {
   return useMemo(() => {
     return applyPagination(data, page, rowsPerPage);
   }, [data, page, rowsPerPage]);
 };
 
-const useUserIds = (users) => {
+const useAlertIds = (alerts) => {
   return useMemo(() => {
-    return users?.map((user) => user.id);
-  }, [users]);
+    return alerts?.map((alert) => alert.id);
+  }, [alerts]);
 };
 
 const Page = () => {
-  const { users, isError, isLoading } = useUsers();
+  const { alerts, isError, isLoading } = useAlerts();
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-  const paginatedUsers = usePaginatedUsers(users, page, rowsPerPage);
-  const userIds = useUserIds(users);
-  const userSelection = useSelection(userIds);
+  const paginatedAlerts = usePaginatedAlerts(alerts, page, rowsPerPage);
+  const alertIds = useAlertIds(alerts);
+  const alertSelection = useSelection(alertIds);
 
   const handlePageChange = useCallback((event, value) => {
     setPage(value);
@@ -51,7 +51,7 @@ const Page = () => {
   return (
     <>
       <Head>
-        <title>Users | Gatekeeper</title>
+        <title>Site Alerts | Gatekeeper</title>
       </Head>
       <Box
         component="main"
@@ -101,24 +101,24 @@ const Page = () => {
                 </Button>
               </div>
             </Stack>
-            <UsersSearch />
-            {isLoading ? (
+            {/* <UsersSearch /> */}
+            {/* {isLoading ? (
               <CircularProgress />
             ) : (
-              <UsersTable
-                count={users.length}
-                items={paginatedUsers}
-                onDeselectAll={userSelection.handleDeselectAll}
-                onDeselectOne={userSelection.handleDeselectOne}
+              <AlertsTable
+                count={alerts.length}
+                items={paginatedAlerts}
+                onDeselectAll={alertSelection.handleDeselectAll}
+                onDeselectOne={alertSelection.handleDeselectOne}
                 onPageChange={handlePageChange}
                 onRowsPerPageChange={handleRowsPerPageChange}
-                onSelectAll={userSelection.handleSelectAll}
-                onSelectOne={userSelection.handleSelectOne}
+                onSelectAll={alertSelection.handleSelectAll}
+                onSelectOne={alertSelection.handleSelectOne}
                 page={page}
                 rowsPerPage={rowsPerPage}
-                selected={userSelection.selected}
+                selected={alertSelection.selected}
               />
-            )}
+            )} */}
           </Stack>
         </Container>
       </Box>

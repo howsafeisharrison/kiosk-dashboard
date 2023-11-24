@@ -5,6 +5,5 @@ module.exports = {
     SMS_API_PASSWORD: '4F179FC0-7A5E-B7C7-E74E-8456E881FC78',
     SMS_API_USERNAME: 'it@howsafe.com.au'
   },
-  assetPrefix: '/dashboard',
   reactStrictMode: true
 };
