@@ -19,11 +19,9 @@ import {
   Typography
 } from '@mui/material';
 import { Scrollbar } from 'src/components/scrollbar';
-import {api as axiosApi} from "../utils/axiosapi";
-
-const deleteUser = () => {
-  api.post('');
-}
+import DeleteDialog from 'src/components/delete-dialog';
+import * as React from 'react';
+import CreateDialog from 'src/components/user-create-dialog';
 
 export const UsersTable = (props) => {
   const {
@@ -39,7 +37,31 @@ export const UsersTable = (props) => {
     rowsPerPage = 0,
     selected = []
   } = props;
-  
+
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [openAdd, setOpenAdd] = React.useState(false);
+  const [selectedUser, setUser] = React.useState(null);
+
+  const handleClickDelete = (user) => {
+    setUser(user);
+    setOpenDelete(true);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+    setUser(null);
+  };
+
+  const handleClickAdd = (user) => {
+    setUser(user);
+    setOpenAdd(true);
+  };
+
+  const handleCloseAdd = () => {
+    setOpenAdd(false);
+    setUser(null);
+  };
+
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
 
@@ -50,7 +72,7 @@ export const UsersTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedAll}
                     indeterminate={selectedSome}
@@ -62,7 +84,7 @@ export const UsersTable = (props) => {
                       }
                     }}
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   Name
                 </TableCell>
@@ -93,7 +115,7 @@ export const UsersTable = (props) => {
                     key={user.id}
                     selected={isSelected}
                   >
-                    <TableCell padding="checkbox">
+                    {/* <TableCell padding="checkbox">
                       <Checkbox
                         checked={isSelected}
                         onChange={(event) => {
@@ -104,7 +126,7 @@ export const UsersTable = (props) => {
                           }
                         }}
                       />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <Stack
                         alignItems="center"
@@ -130,10 +152,10 @@ export const UsersTable = (props) => {
                       {createdAt}
                     </TableCell>
                     <TableCell>
-                      <IconButton onClick={}>
+                      <IconButton onClick={() => handleClickAdd(user)}>
                         <Icon><PencilIcon/></Icon>
                       </IconButton>
-                      <IconButton>
+                      <IconButton onClick={() => handleClickDelete(user)}>
                         <Icon color='error'><TrashIcon/></Icon>
                       </IconButton>
                     </TableCell>
@@ -144,9 +166,18 @@ export const UsersTable = (props) => {
           </Table>
         </Box>
       </Scrollbar>
-      <SimpleDialog
-        open={open}
-        onClose={handleClose}
+      <DeleteDialog
+        open={openDelete}
+        onClose={handleCloseDelete}
+        type={'User'}
+        selectedId={selectedUser?.id}
+        description={`${selectedUser?.first_name} ${selectedUser?.last_name}`}
+      />
+      <CreateDialog
+        open={openAdd}
+        onClose={handleCloseAdd}
+        type={'User'}
+        data={selectedUser}
       />
       <TablePagination
         component="div"

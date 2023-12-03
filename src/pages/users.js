@@ -18,6 +18,7 @@ import { UsersTable } from "src/sections/user/users-table";
 import { UsersSearch } from "src/sections/user/users-search";
 import { applyPagination } from "src/utils/apply-pagination";
 import useUsers from "src/hooks/useUsers";
+import CreateDialog from "src/components/user-create-dialog";
 
 const usePaginatedUsers = (data, page, rowsPerPage) => {
   return useMemo(() => {
@@ -34,6 +35,7 @@ const useUserIds = (users) => {
 const Page = () => {
   const { users, isError, isLoading } = useUsers();
 
+  const [openAdd, setOpenAdd] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const paginatedUsers = usePaginatedUsers(users, page, rowsPerPage);
@@ -47,6 +49,15 @@ const Page = () => {
   const handleRowsPerPageChange = useCallback((event) => {
     setRowsPerPage(event.target.value);
   }, []);
+
+  const handleClickAdd = () => {
+    console.log('hey');
+    setOpenAdd(true);
+  };
+
+  const handleCloseAdd = () => {
+    setOpenAdd(false);
+  };
 
   return (
     <>
@@ -73,6 +84,7 @@ const Page = () => {
                         <ArrowPathIcon />
                       </SvgIcon>
                     }
+                    onClick={() => window.location.reload(false)}
                   >
                     Refresh
                   </Button>
@@ -90,6 +102,7 @@ const Page = () => {
               </Stack>
               <div>
                 <Button
+                  onClick={() => handleClickAdd()}
                   startIcon={
                     <SvgIcon fontSize="small">
                       <PlusIcon />
@@ -122,6 +135,11 @@ const Page = () => {
           </Stack>
         </Container>
       </Box>
+      <CreateDialog
+        open={openAdd}
+        onClose={handleCloseAdd}
+        type={'User'}
+      />
     </>
   );
 };
