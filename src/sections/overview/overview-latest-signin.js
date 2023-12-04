@@ -20,12 +20,13 @@ import { SeverityPill } from 'src/components/severity-pill';
 
 const statusMap = {
   'onsite': 'warning',
-  'signed out': 'success',
-  'timed out': 'error'
+  'kiosk-checkout': 'success',
+  'qrcode-checkout': 'success',
+  'general-expired': 'error'
 };
 
-export const OverviewLatestOrders = (props) => {
-  const { orders = [], sx } = props;
+export const OverviewLatestSignin = (props) => {
+  const { data = [], sx } = props;
 
   return (
     <Card sx={sx}>
@@ -36,13 +37,16 @@ export const OverviewLatestOrders = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell>
-                  Order
-                </TableCell>
-                <TableCell>
                   Visitor
                 </TableCell>
+                <TableCell>
+                  User Type
+                </TableCell>
                 <TableCell sortDirection="desc">
-                  Time
+                  Sign in time
+                </TableCell>
+                <TableCell>
+                  Sign out time
                 </TableCell>
                 <TableCell>
                   Status
@@ -50,26 +54,30 @@ export const OverviewLatestOrders = (props) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {orders.map((order) => {
-                const createdAt = format(order.createdAt, 'dd/MM/yyyy');
-
+              {data.map((v) => {
+                const signIn = format(new Date(v.signin_time), 'dd/MM/yyyy - hh:mm:ss a');
+                const signOut = v.signout_time ? format(new Date(v.signout_time), 'dd/MM/yyyy - hh:mm:ss a') : '';
+                
                 return (
                   <TableRow
                     hover
-                    key={order.id}
+                    key={v.id}
                   >
                     <TableCell>
-                      {order.ref}
+                      {v.name}
                     </TableCell>
                     <TableCell>
-                      {order.customer.name}
+                      {v.userType}
                     </TableCell>
                     <TableCell>
-                      {createdAt}
+                      {signIn}
                     </TableCell>
                     <TableCell>
-                      <SeverityPill color={statusMap[order.status]}>
-                        {order.status}
+                      {signOut}
+                    </TableCell>
+                    <TableCell>
+                      <SeverityPill color={statusMap[v.signout_type ?? 'onsite']}>
+                        {v.signout_type ?? 'onsite'}
                       </SeverityPill>
                     </TableCell>
                   </TableRow>
@@ -98,7 +106,7 @@ export const OverviewLatestOrders = (props) => {
   );
 };
 
-OverviewLatestOrders.prototype = {
-  orders: PropTypes.array,
+OverviewLatestSignin.prototype = {
+  data: PropTypes.array,
   sx: PropTypes.object
 };

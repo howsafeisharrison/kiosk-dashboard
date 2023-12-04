@@ -18,6 +18,9 @@ import {
 import PencilIcon from '@heroicons/react/24/solid/PencilIcon';
 import TrashIcon from '@heroicons/react/24/solid/TrashIcon';
 import { Scrollbar } from 'src/components/scrollbar';
+import DeleteDialog from 'src/components/delete-dialog';
+import * as React from 'react';
+import CreateDialog from 'src/components/user-create-dialog';
 
 export const SigninTable = (props) => {
   const {
@@ -34,6 +37,30 @@ export const SigninTable = (props) => {
     selected = []
   } = props;
 
+  const [openDelete, setOpenDelete] = React.useState(false);
+  const [openAdd, setOpenAdd] = React.useState(false);
+  const [selectedSignin, setSignin] = React.useState(null);
+
+  const handleClickDelete = (signin) => {
+    setSignin(signin);
+    setOpenDelete(true);
+  };
+
+  const handleCloseDelete = () => {
+    setOpenDelete(false);
+    setSignin(null);
+  };
+
+  const handleClickAdd = (signin) => {
+    setSignin(signin);
+    setOpenAdd(true);
+  };
+
+  const handleCloseAdd = () => {
+    setOpenAdd(false);
+    setSignin(null);
+  };
+
   const selectedSome = (selected.length > 0) && (selected.length < items.length);
   const selectedAll = (items.length > 0) && (selected.length === items.length);
 
@@ -44,7 +71,7 @@ export const SigninTable = (props) => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell padding="checkbox">
+                {/* <TableCell padding="checkbox">
                   <Checkbox
                     checked={selectedAll}
                     indeterminate={selectedSome}
@@ -56,7 +83,7 @@ export const SigninTable = (props) => {
                       }
                     }}
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell>
                   Name
                 </TableCell>
@@ -91,7 +118,7 @@ export const SigninTable = (props) => {
                     key={visit.id}
                     selected={isSelected}
                   >
-                    <TableCell padding="checkbox">
+                    {/* <TableCell padding="checkbox">
                       <Checkbox
                         checked={isSelected}
                         onChange={(event) => {
@@ -102,7 +129,7 @@ export const SigninTable = (props) => {
                           }
                         }}
                       />
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell>
                       <Stack
                         alignItems="center"
@@ -130,10 +157,10 @@ export const SigninTable = (props) => {
                       {visit.signout_type ? visit.signout_type : 'On-site'}
                     </TableCell>
                     <TableCell>
-                      <IconButton>
+                      <IconButton onClick={() => handleClickAdd(visit)}>
                         <Icon><PencilIcon/></Icon>
                       </IconButton>
-                      <IconButton>
+                      <IconButton onClick={() => handleClickDelete(visit)}>
                         <Icon color='error'><TrashIcon/></Icon>
                       </IconButton>
                     </TableCell>
@@ -144,6 +171,19 @@ export const SigninTable = (props) => {
           </Table>
         </Box>
       </Scrollbar>
+      <DeleteDialog
+        open={openDelete}
+        onClose={handleCloseDelete}
+        type={'SignIn'}
+        selectedId={selectedSignin?.id}
+        description={`the visit by ${selectedSignin?.name} at ${selectedSignin ? format(new Date(selectedSignin.signin_time), 'dd/MM/yyyy, hh:mm:ss a') : ''}`}
+      />
+      <CreateDialog
+        open={openAdd}
+        onClose={handleCloseAdd}
+        type={'SignIn'}
+        data={selectedSignin}
+      />
       <TablePagination
         component="div"
         count={count}

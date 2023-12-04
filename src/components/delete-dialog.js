@@ -1,7 +1,6 @@
 import * as React from "react";
 import DialogTitle from "@mui/material/DialogTitle";
 import Dialog from "@mui/material/Dialog";
-import { blue } from "@mui/material/colors";
 import { Button, DialogActions, DialogContent, Typography } from "@mui/material";
 import { api as axiosApi } from "../utils/axiosapi";
 import PropTypes from "prop-types";
@@ -22,9 +21,28 @@ export default function DeleteDialog(props) {
   };
 
   const handleDelete = async (value) => {
+    let result;
     switch (type) {
       case "User":
-        const result = await axiosApi.delete(`/visitors/${selectedId}`);
+        result = await axiosApi.delete(`/visitors/${selectedId}`);
+        if (result.status == 200) {
+          handleClose();
+          window.location.reload(false);
+        } else {
+          console.log("Error");
+        }
+        break;
+      case "SignIn":
+        result = await axiosApi.delete(`/visits/${selectedId}`);
+        if (result.status == 200) {
+          handleClose();
+          window.location.reload(false);
+        } else {
+          console.log("Error");
+        }
+        break;
+      case "SiteAlert":
+        result = await axiosApi.delete(`/visitors/deleteSiteRule/${selectedId}`);
         if (result.status == 200) {
           handleClose();
           window.location.reload(false);

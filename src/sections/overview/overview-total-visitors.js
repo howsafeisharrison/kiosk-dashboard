@@ -4,8 +4,8 @@ import ArrowUpIcon from '@heroicons/react/24/solid/ArrowUpIcon';
 import UsersIcon from '@heroicons/react/24/solid/UsersIcon';
 import { Avatar, Card, CardContent, Stack, SvgIcon, Typography } from '@mui/material';
 
-export const OverviewTotalCustomers = (props) => {
-  const { difference, positive = false, sx, value } = props;
+export const OverviewTotalVisitors = (props) => {
+  const { sx, value } = props;
 
   return (
     <Card sx={sx}>
@@ -21,7 +21,7 @@ export const OverviewTotalCustomers = (props) => {
               color="text.secondary"
               variant="overline"
             >
-              On Site
+              Total number on site
             </Typography>
             <Typography variant="h4">
               {value}
@@ -44,10 +44,8 @@ export const OverviewTotalCustomers = (props) => {
   );
 };
 
-OverviewTotalCustomers.propTypes = {
-  difference: PropTypes.number,
-  positive: PropTypes.bool,
-  value: PropTypes.string.isRequired,
+OverviewTotalVisitors.propTypes = {
+  value: PropTypes.number.isRequired,
   sx: PropTypes.object
 };
 

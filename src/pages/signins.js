@@ -68,6 +68,7 @@ const Page = () => {
                 <Stack alignItems="center" direction="row" spacing={1}>
                   <Button
                     color="inherit"
+                    onClick={() => window.location.reload(false)}
                     startIcon={
                       <SvgIcon fontSize="small">
                         <ArrowPathIcon />

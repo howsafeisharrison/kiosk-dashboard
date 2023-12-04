@@ -15,3 +15,8 @@ jobs:
         username: harrison@gatekeeper.howsafe.com.au
         password: ${{ secrets.ftp_password }}
         server-dir: ./dashboard/
+        exclude: | 
+          **/.git*
+          **/.git*/**
+          **/node_modules/**
+          **/next.config.js
