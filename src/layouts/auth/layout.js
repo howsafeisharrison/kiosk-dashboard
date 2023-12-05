@@ -97,7 +97,7 @@ export const Layout = (props) => {
             </Typography>
             <img
               alt=""
-              src="/assets/terrordogzuul.jpg"
+              src="/assets/landing.png"
             />
           </Box>
         </Grid>

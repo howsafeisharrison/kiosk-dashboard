@@ -35,7 +35,7 @@ const userTypesCount = (type, visits) => {
 const useLatestSignIns = (visits) => {
   return React.useMemo(() => {
     if (visits?.length < 5) {
-      return visits;
+      return visits.reverse();
     } else {
       return visits?.slice(Math.max(visits.length - 5, 1)).reverse();
     }
@@ -46,6 +46,7 @@ const Page = () => {
   const { visits, isError, isLoading } = useVisits();
   const onsite = useOnsiteVisits(visits);
   const latest = useLatestSignIns(visits);
+
   return (
     <>
       <Head>

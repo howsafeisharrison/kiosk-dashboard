@@ -63,7 +63,7 @@ const useChartOptions = (labels) => {
 };
 
 const iconMap = {
-  Visitor: <FontAwesomeIcon icon={faPerson}/>,
+  Visitor: <FontAwesomeIcon icon={faPerson} />,
   Contractor: <FontAwesomeIcon icon={faHelmetSafety} />,
   Officer: <FontAwesomeIcon icon={faAward} />,
   Staff: <FontAwesomeIcon icon={faBriefcase} />,
@@ -77,37 +77,63 @@ export const OverviewTraffic = (props) => {
     <Card sx={sx}>
       <CardHeader title="Visitor Types" />
       <CardContent>
-        <Chart height={300} options={chartOptions} series={chartSeries} type="donut" width="100%" />
-        <Stack
-          alignItems="center"
-          direction="row"
-          justifyContent="center"
-          spacing={2}
-          sx={{ mt: 2 }}
-        >
-          {chartSeries.map((item, index) => {
-            const label = labels[index];
-
-            return (
-              <Box
-                key={label}
-                sx={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                {iconMap[label]}
-                <Typography sx={{ my: 1 }} variant="h6">
-                  {label}
-                </Typography>
-                <Typography color="text.secondary" variant="subtitle2">
-                  {Math.round((item / chartSeries.reduce((a, c) => a + c, 0)) * 100)}%
-                </Typography>
-              </Box>
-            );
-          })}
-        </Stack>
+        {chartSeries?.length > 0 ? (
+          <>
+            <Chart
+              height={300}
+              options={chartOptions}
+              series={chartSeries}
+              type="donut"
+              width="100%"
+            />
+            <Stack
+              alignItems="center"
+              direction="row"
+              justifyContent="center"
+              spacing={2}
+              sx={{ mt: 2 }}
+            >
+              {chartSeries.map((item, index) => {
+                const label = labels[index];
+                return (
+                  <Box
+                    key={label}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    {iconMap[label]}
+                    <Typography sx={{ my: 1 }} variant="h6">
+                      {label}
+                    </Typography>
+                    <Typography color="text.secondary" variant="subtitle2">
+                      {Math.round(
+                        (item /
+                          (chartSeries.reduce((a, c) => a + c, 0) > 0
+                            ? chartSeries.reduce((a, c) => a + c, 0)
+                            : 1)) *
+                          100
+                      )}
+                      %
+                    </Typography>
+                  </Box>
+                );
+              })}
+            </Stack>
+          </>
+        ) : (
+          <Typography
+            height={460}
+            variant="h3"
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+          >
+            No data
+          </Typography>
+        )}
       </CardContent>
     </Card>
   );

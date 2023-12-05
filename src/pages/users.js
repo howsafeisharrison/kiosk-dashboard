@@ -51,7 +51,6 @@ const Page = () => {
   }, []);
 
   const handleClickAdd = () => {
-    console.log('hey');
     setOpenAdd(true);
   };
 

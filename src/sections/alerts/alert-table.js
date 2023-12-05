@@ -24,13 +24,18 @@ import CreateDialog from 'src/components/user-create-dialog';
 import { SeverityPill } from 'src/components/severity-pill';
 
 const statusMap = {
-  'onsite': 'warning',
-  'kiosk-checkout': 'success',
-  'qrcode-checkout': 'success',
-  'general-expired': 'error'
+  '0': 'info',
+  '1': 'warning',
+  '2': 'error'
 };
 
-export const SigninTable = (props) => {
+const levelMap = {
+  '0': 'Notice',
+  '1': 'Warning',
+  '2': 'Danger'
+};
+
+export const AlertTable = (props) => {
   const {
     count = 0,
     items = [],
@@ -93,37 +98,29 @@ export const SigninTable = (props) => {
                   />
                 </TableCell> */}
                 <TableCell>
-                  Name
+                  Title
                 </TableCell>
                 <TableCell>
-                  User Type
+                  Content
                 </TableCell>
                 <TableCell>
-                  Visiting
+                  Level
                 </TableCell>
                 <TableCell>
-                  Sign In Time
+                  Last Updated
                 </TableCell>
-                <TableCell>
-                  Sign Out TIme
-                </TableCell>
-                <TableCell>
-                  Status
-                </TableCell>
-                <TableCell>
-                </TableCell>
+                <TableCell></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((visit) => {
-                const isSelected = selected.includes(visit.id);
-                const signIn = format(new Date(visit.signin_time), 'dd/MM/yyyy - hh:mm:ss a');
-                const signOut = visit.signout_time ? format(new Date(visit.signout_time), 'dd/MM/yyyy - hh:mm:ss a') : '';
+              {items.map((rule) => {
+                const isSelected = selected.includes(rule.id);
+                const modified = format(new Date(rule.modified_date ?? rule.created_date), 'dd/MM/yyyy - hh:mm:ss a');
 
                 return (
                   <TableRow
                     hover
-                    key={visit.id}
+                    key={rule.id}
                     selected={isSelected}
                   >
                     {/* <TableCell padding="checkbox">
@@ -131,9 +128,9 @@ export const SigninTable = (props) => {
                         checked={isSelected}
                         onChange={(event) => {
                           if (event.target.checked) {
-                            onSelectOne?.(visit.id);
+                            onSelectOne?.(rule.id);
                           } else {
-                            onDeselectOne?.(visit.id);
+                            onDeselectOne?.(rule.id);
                           }
                         }}
                       />
@@ -145,28 +142,22 @@ export const SigninTable = (props) => {
                         spacing={2}
                       >
                         <Typography variant="subtitle2">
-                          {visit.name}
+                          {rule.title}
                         </Typography>
                       </Stack>
                     </TableCell>
                     <TableCell>
-                      {visit.userType}
+                      {rule.content}
                     </TableCell>
                     <TableCell>
-                      {visit.visiting}
-                    </TableCell>
-                    <TableCell>
-                      {signIn}
-                    </TableCell>
-                    <TableCell>
-                      {signOut}
-                    </TableCell>
-                    <TableCell>
-                      <SeverityPill color={statusMap[visit.signout_type ?? 'onsite']}>
-                        {visit.signout_type ?? 'onsite'}
+                      <SeverityPill color={statusMap[rule.level ?? '0']}>
+                        {levelMap[rule.level ?? '0'].toUpperCase()}
                       </SeverityPill>
                     </TableCell>
                     <TableCell>
+                      {modified}
+                    </TableCell>
+                    <TableCell width={120}>
                       <IconButton onClick={() => handleClickAdd(visit)}>
                         <Icon><PencilIcon/></Icon>
                       </IconButton>
@@ -207,7 +198,7 @@ export const SigninTable = (props) => {
   );
 };
 
-SigninTable.propTypes = {
+AlertTable.propTypes = {
   count: PropTypes.number,
   items: PropTypes.array,
   onDeselectAll: PropTypes.func,

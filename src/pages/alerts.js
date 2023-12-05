@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { useSelection } from "src/hooks/use-selection";
 import { Layout as DashboardLayout } from "src/layouts/dashboard/layout";
-import { UsersTable } from "src/sections/user/users-table";
+import { AlertTable } from "src/sections/alerts/alert-table";
 import { UsersSearch } from "src/sections/user/users-search";
 import { applyPagination } from "src/utils/apply-pagination";
 import useAlerts from "src/hooks/useAlerts";
@@ -64,7 +64,7 @@ const Page = () => {
           <Stack spacing={3}>
             <Stack direction="row" justifyContent="space-between" spacing={4}>
               <Stack spacing={1}>
-                <Typography variant="h4">Users</Typography>
+                <Typography variant="h4">Site Alerts</Typography>
                 <Stack alignItems="center" direction="row" spacing={1}>
                   <Button
                     color="inherit"
@@ -101,11 +101,10 @@ const Page = () => {
                 </Button>
               </div>
             </Stack>
-            {/* <UsersSearch /> */}
-            {/* {isLoading ? (
+            {isLoading ? (
               <CircularProgress />
             ) : (
-              <AlertsTable
+              <AlertTable
                 count={alerts.length}
                 items={paginatedAlerts}
                 onDeselectAll={alertSelection.handleDeselectAll}
@@ -118,7 +117,7 @@ const Page = () => {
                 rowsPerPage={rowsPerPage}
                 selected={alertSelection.selected}
               />
-            )} */}
+            )}
           </Stack>
         </Container>
       </Box>
